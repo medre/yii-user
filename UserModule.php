@@ -92,7 +92,7 @@ class UserModule extends CWebModule
 	 */
 	//public $cacheEnable = false;
 	
-	public $tableUsers = '{{users}}';
+	public $tableUsers = 'usr_users';
 	public $tableProfiles = '{{profiles}}';
 	public $tableProfileFields = '{{profiles_fields}}';
 
@@ -122,6 +122,9 @@ class UserModule extends CWebModule
 			'user.models.*',
 			'user.components.*',
 		));
+
+        // This line added for backend-frontend structure (WebApplicationEndBehavior)
+        Yii::app()->onModuleCreate(new CEvent($this));
 	}
 	
 	public function getBehaviorsFor($componentName){

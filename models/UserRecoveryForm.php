@@ -18,9 +18,10 @@ class UserRecoveryForm extends CFormModel {
 		return array(
 			// username and password are required
 			array('login_or_email', 'required'),
-			array('login_or_email', 'match', 'pattern' => '/^[A-Za-z0-9@.-\s,]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+			//array('login_or_email', 'match', 'pattern' => '/^[A-Za-z0-9@.-\s,]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+            array('login_or_email','check'),
 			// password needs to be authenticated
-			array('login_or_email', 'checkexists'),
+			array('login_or_email', 'checkExists'),
 		);
 	}
 	/**
@@ -32,8 +33,21 @@ class UserRecoveryForm extends CFormModel {
 			'login_or_email'=>UserModule::t("username or email"),
 		);
 	}
+
+    public function check($attribute,$params){
+
+        if (strpos($this->login_or_email,"@")) {
+
+            if (filter_var($this->login_or_email, FILTER_VALIDATE_EMAIL))
+                return true;
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 	
-	public function checkexists($attribute,$params) {
+	public function checkExists($attribute,$params) {
 		if(!$this->hasErrors())  // we only want to authenticate when no input errors
 		{
 			if (strpos($this->login_or_email,"@")) {

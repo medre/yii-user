@@ -24,7 +24,8 @@ class UserLogin extends CFormModel
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
-			array('password', 'authenticate'),
+			array('password', 'authenticate', 'on'=>'front', 'admin'=>false),
+            array('password', 'authenticate', 'on'=>'back', 'admin'=>true),
 		);
 	}
 
@@ -49,7 +50,10 @@ class UserLogin extends CFormModel
 		if(!$this->hasErrors())  // we only want to authenticate when no input errors
 		{
 			$identity=new UserIdentity($this->username,$this->password);
-			$identity->authenticate();
+
+            $identity->isAdmin = $params['admin'];
+
+            $identity->authenticate();
 			switch($identity->errorCode)
 			{
 				case UserIdentity::ERROR_NONE:

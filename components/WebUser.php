@@ -91,7 +91,6 @@ class WebUser extends CWebUser
         return Yii::app()->getModule('user')->getAdmins();
     }
 
-
     /**
      * @return boolean
      */

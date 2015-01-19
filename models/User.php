@@ -55,7 +55,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return Yii::app()->getModule('user')->tableUsers;
+		return 'usr_users';
 	}
 
 	/**
@@ -179,8 +179,7 @@ class User extends CActiveRecord
         // should not be searched.
 
         $criteria=new CDbCriteria;
-        
-        $criteria->compare('id',$this->id);
+
         $criteria->compare('username',$this->username,true);
         $criteria->compare('password',$this->password);
         $criteria->compare('email',$this->email,true);

@@ -11,7 +11,7 @@ return array(
 	'Register' => 'Kayıt',
 	'Login' => 'Giriş',
 	'Logout' => 'Çıkış',
-	'username' => 'kullanıcı adı',
+	'username' => 'Kullanıcı Adı',
 	'username or email' => 'kullanıcı adı yada e-posta',
 	'password' => 'şifre',
 	'Remember me next time' => 'Beni hatırla',

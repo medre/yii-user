@@ -8,6 +8,8 @@
 class UserIdentity extends CUserIdentity
 {
 	private $_id;
+    public $isAdmin=true;
+
 	const ERROR_EMAIL_INVALID=3;
 	const ERROR_STATUS_NOTACTIV=4;
 	const ERROR_STATUS_BAN=5;
@@ -22,9 +24,9 @@ class UserIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		if (strpos($this->username,"@")) {
-			$user=User::model()->notsafe()->findByAttributes(array('email'=>$this->username));
+			$user=User::model()->notsafe()->findByAttributes(array('email'=>$this->username,'superuser'=>$this->isAdmin));
 		} else {
-			$user=User::model()->notsafe()->findByAttributes(array('username'=>$this->username));
+			$user=User::model()->notsafe()->findByAttributes(array('username'=>$this->username,'superuser'=>$this->isAdmin));
 		}
 		if($user===null)
 			if (strpos($this->username,"@")) {
@@ -39,9 +41,9 @@ class UserIdentity extends CUserIdentity
 		else if($user->status==-1)
 			$this->errorCode=self::ERROR_STATUS_BAN;
 		else {
-			$this->_id=$user->id;
-			$this->username=$user->username;
-			$this->errorCode=self::ERROR_NONE;
+			$this->_id       = $user->id;
+			$this->username  = $user->username;
+			$this->errorCode = self::ERROR_NONE;
 		}
 		return !$this->errorCode;
 	}
